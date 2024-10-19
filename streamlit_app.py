@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+st.title("BGA Testimonios")
+
+text_search = st.text_input("Busca testimonios por caso de uso", value="")
+industry = st.selectbox("Industria", ["", "Agricultura", "Finanzas"])
