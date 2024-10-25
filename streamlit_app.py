@@ -18,7 +18,7 @@ with st.form("search"):
   search_text = st.text_input("Busca testimonios por caso de uso", value="")
   industry = st.selectbox("Industria", industries(), index=None)
   num_results = st.text_input("Numero maximo de resultados", value="3")
-  st.form_submit_button('Search')
+  st.form_submit_button('Buscar')
 
 if search_text:
     results = sv_api.search_success_videos(search_text, int(num_results), industry)
@@ -39,3 +39,4 @@ if search_text:
             st.markdown(f"*{metadata['client'].strip()}*")
             st.caption(f"{row['page_content'].strip()}")
             st.markdown(f"**http://bga.com/{metadata['source']}**")
+            st.caption(", ".join(metadata['speakers']))
