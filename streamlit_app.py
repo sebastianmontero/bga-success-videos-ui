@@ -1,6 +1,10 @@
 import streamlit as st
 from services.success_videos_api import SuccessVideosApi
 
+st.set_page_config(
+    page_title="BGA Testimonios",
+)
+
 @st.cache_resource
 def get_success_videos_api() -> SuccessVideosApi:
     return SuccessVideosApi(st.secrets.success_videos_api_base_url)
