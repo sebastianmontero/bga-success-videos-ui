@@ -5,6 +5,7 @@ st.set_page_config(
     page_title="BGA Testimonios",
 )
 
+
 @st.cache_resource
 def get_success_videos_api() -> SuccessVideosApi:
     return SuccessVideosApi(st.secrets.success_videos_api_base_url)
@@ -32,23 +33,25 @@ if search_text:
     results = sv_api.search_success_videos(search_text, int(num_results), industry)
     print(results)
 
-N_cards_per_row = 2
+N_results_per_row = 1
 if search_text:
     for n_row, row in enumerate(results):
         metadata = row['metadata']
-        i = n_row%N_cards_per_row
+        i = n_row%N_results_per_row
         if i==0:
             st.write("---")
-            cols = st.columns(N_cards_per_row, gap="large")
+            num_cols = N_results_per_row*2
+            cols = st.columns(num_cols, gap="large", vertical_alignment="center")
         # draw the card
-        with cols[n_row%N_cards_per_row]:
+        with cols[i*2]:
                 st.caption(f"{metadata['industry'].strip()}")
                 st.markdown(f"**{metadata['title'].strip()}**")
-                st.markdown(f"*{metadata['client'].strip()}*")
                 st.caption(f"{row['page_content'].strip()}")
-                st.markdown(f"**http://bga.com/{metadata['source']}**")
+                st.markdown(f"*{metadata['client'].strip()}*")
+                st.caption(f"{metadata['about'].strip()}")
                 st.caption(", ".join(metadata['speakers']))
-                
+        
+        with cols[i*2+1]:
                 # Video iframe
                 st.markdown(
                     f"""<iframe 
